@@ -6,7 +6,8 @@ import {
   loadProvider, 
   loadNetwork, 
   loadAccount, 
-  loadToken 
+  loadTokens,
+  loadExchange 
 } from '../store/interactions';
 
 function App() {
@@ -14,14 +15,18 @@ function App() {
   const dispatch = useDispatch()
 
   const loadBlockchainData = async () => {
-    await loadAccount(dispatch)
 
     const provider = loadProvider(dispatch)
     const chainId = await loadNetwork(provider, dispatch)
 
+    await loadAccount(provider, dispatch)
 
-    await loadToken(provider, config[chainId].Dapp.address, dispatch)
+    const Dapp= config[chainId].Dapp
+    const mETH= config[chainId].mETH
+    await loadTokens(provider, [Dapp.address, mETH.address], dispatch)
 
+    const exchangeConfig = config[chainId].exchange
+    await loadExchange(provider, exchangeConfig.address, dispatch)
   }
 
   useEffect(()  => {
