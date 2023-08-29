@@ -14,13 +14,13 @@ export const provider = (state = {}, action) => {
 		case 'ACCOUNT_LOADED':
 			return {
 				...state,
-				balance: action.balance
+				account: action.account
 			}
 
 		case 'ETHER_BALANCE_LOADED':
 			return {
 				...state,
-				account: action.account
+				balance: action.balance
 			}
 
 		default:
@@ -52,7 +52,7 @@ export const tokens = (state = DEFAULT_TOKENS_STATE, action) => {
 			}
 
 		default:
-				return state
+			return state
 	}
 }
 
