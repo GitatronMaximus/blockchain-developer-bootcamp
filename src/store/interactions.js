@@ -53,6 +53,11 @@ export const loadExchange = async (provider, address, dispatch) => {
 }
 
 export const subscribeToEvents = (exchange, dispatch) => {
+	exchange.on('Cancel', (id, uder, tokenGet, amountGet, tokenGive, amountGive, timestamp, event) => {
+		const order = event.args
+		dispatch({ type: 'ORDER_CANCEL_SUCCESS', order, event })
+	})
+
 	exchange.on('Deposit', (token, user, amount, balance, event) => {
 		dispatch({ type: 'TRANSFER_SUCCESS', event })
 	})
@@ -65,6 +70,7 @@ export const subscribeToEvents = (exchange, dispatch) => {
 		const order = event.args
 		dispatch({ type: 'NEW_ORDER_SUCCESS', order, event })
 	})
+
 }
 
 
@@ -167,6 +173,19 @@ export const makeSellOrder = async (provider, exchange, tokens, order, dispatch)
 	}
 }
 
+export const cancelOrder = async (provider, exchange, order, dispatch) => {
+
+	dispatch({ type: 'ORDER_CANCEL_REQUEST' })
+
+	try {
+		const signer= await provider.getSigner()
+		const transaction = await exchange.connect(signer).cancelOrder(order.id)
+		await transaction.wait()
+	} catch (error) {
+		dispatch({ type: 'ORDER__CANCEL_FAIL' })
+	}
+
+}
 			// address _tokenGet, 
 			// uint256 _amountGet, 
 			// address _tokenGive, 
