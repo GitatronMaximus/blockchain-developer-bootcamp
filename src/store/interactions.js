@@ -53,9 +53,14 @@ export const loadExchange = async (provider, address, dispatch) => {
 }
 
 export const subscribeToEvents = (exchange, dispatch) => {
-	exchange.on('Cancel', (id, uder, tokenGet, amountGet, tokenGive, amountGive, timestamp, event) => {
+	exchange.on('Cancel', (id, user, tokenGet, amountGet, tokenGive, amountGive, timestamp, event) => {
 		const order = event.args
 		dispatch({ type: 'ORDER_CANCEL_SUCCESS', order, event })
+	})
+
+	exchange.on('Trade', (id, user, tokenGet, amountGet, tokenGive, amountGive, creator, timestamp, event) => {
+		const order = event.args
+		dispatch({ type: 'ORDER_FILL_SUCCESS', order, event })
 	})
 
 	exchange.on('Deposit', (token, user, amount, balance, event) => {
@@ -150,7 +155,7 @@ export const makeBuyOrder = async (provider, exchange, tokens, order, dispatch) 
 		const signer= await provider.getSigner()
 		const transaction = await exchange.connect(signer).makeOrder(tokenGet, amountGet, tokenGive, amountGive)
 		await transaction.wait()
-	} catch (error) {
+	}   catch (error) {
 		dispatch({ type: 'NEW_ORDER_FAIL' })
 	}
 }
@@ -168,7 +173,7 @@ export const makeSellOrder = async (provider, exchange, tokens, order, dispatch)
 		const signer= await provider.getSigner()
 		const transaction = await exchange.connect(signer).makeOrder(tokenGet, amountGet, tokenGive, amountGive)
 		await transaction.wait()
-	} catch (error) {
+	}   catch (error) {
 		dispatch({ type: 'NEW_ORDER_FAIL' })
 	}
 }
@@ -181,12 +186,23 @@ export const cancelOrder = async (provider, exchange, order, dispatch) => {
 		const signer= await provider.getSigner()
 		const transaction = await exchange.connect(signer).cancelOrder(order.id)
 		await transaction.wait()
-	} catch (error) {
+	}   catch (error) {
 		dispatch({ type: 'ORDER__CANCEL_FAIL' })
 	}
-
 }
-			// address _tokenGet, 
-			// uint256 _amountGet, 
-			// address _tokenGive, 
-			// uint256 _amountGive
+
+export const fillOrder = async (provider, exchange, order, dispatch) => {
+	dispatch({ type: 'ORDER_FILL_REQUEST' })
+
+	try {
+		const signer= await provider.getSigner()
+		const transaction = await exchange.connect(signer).fillOrder(order.id)
+		await transaction.wait()
+	}   catch (error) {
+		dispatch({ type: 'ORDER__FILL_FAIL' })
+	}
+}
+
+
+
+
