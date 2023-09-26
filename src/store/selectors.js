@@ -6,9 +6,9 @@ import { ethers } from 'ethers';
 const GREEN = '#25CE8F'
 const RED = '#F45353'
 
-
 const account = state => get(state, 'provider.account')
 const tokens = state => get(state, 'tokens.contracts')
+const events = state => get(state, 'exchange.events')
 
 const allOrders = state => get(state, 'exchange.allOrders.data', [])
 const cancelledOrders = state => get(state, 'exchange.cancelledOrders.data', [])
@@ -28,6 +28,16 @@ const openOrders = state => {
   return openOrders
 
 }
+
+export const myEventsSelector = createSelector(
+  account,
+  events,
+  (account, events) => {
+    events = events.filter((e) => e.args.user === account)
+    console.log(events)
+    return events
+  }
+)
 
 // ------------------------------------------------------------------------------
 // MY OPEN ORDERS
@@ -102,7 +112,6 @@ const decorateOrder = (order, tokens) => {
     formattedTimestamp: moment.unix(order.timestamp).format('h:mm:ssa d MMM D')
   })
 }
-
 
 // ------------------------------------------------------------------------------
 // ALL FILLED ORDERS
@@ -222,7 +231,6 @@ const decorateMyFilledOrder = (order, account, tokens) => {
   })
 }
 
-
 // ------------------------------------------------------------------------------
 // ORDER BOOK
 
@@ -284,7 +292,6 @@ const decorateOrderBookOrder = (order, tokens) => {
     orderFillAction: (orderType === 'buy' ? 'sell' : 'buy')
   })
 }
-
 
 // ------------------------------------------------------------------------------
 // PRICE CHART

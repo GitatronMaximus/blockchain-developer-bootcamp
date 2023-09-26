@@ -76,7 +76,6 @@ const [token2TransferAmount, setToken2TransferAmount ] = useState(0)
     }
   }
 
-
   useEffect(()  => {
     if(exchange && tokens[0] && tokens[1] && account) {
       loadBalances(exchange, tokens, account, dispatch)
@@ -132,7 +131,7 @@ const [token2TransferAmount, setToken2TransferAmount ] = useState(0)
         </div>
 
         <form onSubmit={isDeposit ? (e) => depositHandler(e, tokens[1]) : (e) => withdrawHandler(e, tokens[1])}>
-          <label htmlFor="token1"></label>
+          <label htmlFor="token1">{symbols && symbols[1]} Amount</label>
           <input 
             type="text" 
             id='token1' 

@@ -234,7 +234,7 @@ export const exchange = (state = DEFAULT_EXCHANGE_STATE, action) => {
 			...state,
 			transaction: {
 			 transactionType: 'Transfer',
-			 isPending: true,
+			 isPending: false,
 			 isSuccessful: true
 		},
 		transferInProgress: false,

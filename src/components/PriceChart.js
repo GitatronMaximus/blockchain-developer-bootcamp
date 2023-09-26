@@ -56,10 +56,6 @@ const PriceChart = () => {
         />
       )}
 
-
-
-
-
     </div>
   );
 }

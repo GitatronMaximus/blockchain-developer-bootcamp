@@ -80,9 +80,6 @@ describe('Exchange', () => {
 		})
 	})	
 	
-
-
-
 	describe('Withdrawing Tokens', () => {
 			let transaction, result
 			let amount = tokens(10)
