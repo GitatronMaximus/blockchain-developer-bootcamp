@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import dapp from '../assets/dapp.svg';
 import eth from '../assets/eth.svg';
 
+
 import {loadBalances, transferTokens } from '../store/interactions';
 
 const Balance = () => {
@@ -92,7 +93,7 @@ const [token2TransferAmount, setToken2TransferAmount ] = useState(0)
         </div>
       </div>
 
-      {/* Deposit/Withdraw Component 1 (Dapp) */}
+      {/* Deposit/Withdraw Component 1 (dapp) */}
 
       <div className='exchange__transfers--form'>
         <div className='flex-between'>

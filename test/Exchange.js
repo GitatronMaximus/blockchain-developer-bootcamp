@@ -74,7 +74,7 @@ describe('Exchange', () => {
 		})
 
 		describe('Failure', () => {
-			it('fails when no tokens are approved', async () => {
+			it('Fails when no tokens are approved', async () => {
 				await expect(exchange.connect(user1).depositToken(token1.address, amount)).to.be.reverted
 			})
 		})
@@ -117,9 +117,9 @@ describe('Exchange', () => {
 
 
 		describe('Failure', () => {
-				it('fails for insufficient balance', async () => {
-				await expect(exchange.connect(user1).withdrawToken(token1.address, amount)).to.be.reverted
-				})
+			it('fails for insufficient balance', async () => {
+			await expect(exchange.connect(user1).withdrawToken(token1.address, amount)).to.be.reverted
+			})
 		})
 
 	})

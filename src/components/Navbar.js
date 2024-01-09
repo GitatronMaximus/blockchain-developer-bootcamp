@@ -1,8 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux'
 import Blockies from 'react-blockies'
 
-import logo from '../assets/logo.png'
 import eth from '../assets/eth.svg'
+import logo2 from '../assets/logo2.png'
 
 import { loadAccount } from '../store/interactions'
 
@@ -30,8 +30,8 @@ const Navbar = () => {
   return(
     <div className='exchange__header grid'>
       <div className='exchange__header--brand flex'>
-      <img src={logo} className='logo' alt='Dapp logo'></img>
-      	<h1>Dapp Token Exchange</h1>
+      <img src={logo2} className='logo' alt='SwapMeet logo'></img>
+      	<h1>SwapMeet</h1>
 
       </div>
 

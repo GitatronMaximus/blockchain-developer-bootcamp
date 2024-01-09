@@ -37,7 +37,7 @@ contract Exchange {
 		uint256 timestamp
 	);
 
-	event  Trade(
+	event Trade(
 		uint256 id,
 		address user,
 		address tokenGet,
